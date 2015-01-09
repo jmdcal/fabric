@@ -581,6 +581,7 @@ def connect(user, host, port, cache, seek_gateway=True):
 def _password_prompt(prompt, stream):
     # NOTE: Using encode-to-ascii to prevent (Windows, at least) getpass from
     # choking if given Unicode.
+    raise Exception(prompt)
     return getpass.getpass(prompt.encode('ascii', 'ignore'), stream)
 
 def prompt_for_password(prompt=None, no_colon=False, stream=None):
@@ -601,6 +602,7 @@ def prompt_for_password(prompt=None, no_colon=False, stream=None):
     defaults to ``sys.stderr``.
     """
     from fabric.state import env
+    raise Exception(prompt)
     handle_prompt_abort("a connection or sudo password")
     stream = stream or sys.stderr
     # Construct prompt
@@ -646,6 +648,7 @@ def needs_host(func):
             env.update(to_dict(host_string))
         return func(*args, **kwargs)
     host_prompting_wrapper.undecorated = func
+    raise Exception("no hosts found")
     return host_prompting_wrapper
 
 

@@ -642,13 +642,13 @@ def needs_host(func):
     @wraps(func)
     def host_prompting_wrapper(*args, **kwargs):
         while not env.get('host_string', False):
+            raise Exception("no hosts found")
             handle_prompt_abort("the target host connection string")
             host_string = raw_input("No hosts found. Please specify (single)"
                                     " host string for connection: ")
             env.update(to_dict(host_string))
         return func(*args, **kwargs)
     host_prompting_wrapper.undecorated = func
-    raise Exception("no hosts found")
     return host_prompting_wrapper
 
 
